@@ -1,0 +1,11 @@
+html{
+	background-color: #FAFAFA;
+}
+body{
+	font-family: 'Open Sans', sans-serif;
+	width: 80%;
+	margin: 40px auto;
+	background-color: white;
+	border: 1px solid #EEE;
+	padding: 30px;
+}
