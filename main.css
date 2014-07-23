@@ -18,3 +18,8 @@ body{
 .CodeMirror pre{
   background-color: white !important;
 }
+
+.lower_caption{
+font-style: italic;
+color: #00A001;  
+}

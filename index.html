@@ -71,7 +71,7 @@
 
 		<p>Attempting to retrieve values from undefined will throw a TypeError exception. This can be guarded against with the && operator</p>
 
-		<pre>flight.equipment && flight.equipment.model</pre>
+		<pre>var value = flight.equipment && flight.equipment.model</pre>
 
 		<p>Objects are passed around by reference. They are never copied.</p>
 
@@ -85,7 +85,7 @@
 
 		<pre>if (typeof Object.create !== 'function') { Object.create = function (o) { var F = function () {}; F.prototype = o; return new F(); }; }</pre>
 
-		<pre>When we make changes to an object, the object's prototype is not touched. The prototype link is used only in retrieval.</pre>
+		When we make changes to an object, the object's prototype is not touched. The prototype link is used only in retrieval.
 
 		<h3>Delegation</h3>
 
@@ -95,7 +95,7 @@
 
 		<h3>Enumeration</h3>
 
-		<p>The for in statement can loop over all of the property names in an object. The enumeration will include all of the properties—including functions and prototype properties that you might not be interested in—so it is necessary to filter out the values you don't want.</p>
+		<p>The for in statement can loop over all of the property names in an object. The enumeration will include all of the properties including functions and prototype properties that you might not be interested in so it is necessary to filter out the values you don't want.</p>
 
 		<pre>var name; for (name in another_stooge) { if (typeof another_stooge[name] !== 'function') { document.writeln(name + ': ' + another_stooge[name]); } }</pre>
 
@@ -200,7 +200,7 @@
 
 		<p>Some methods do not have a return value. For example, it is typical for methods that set or change the state of an object to return nothing. If we have those methods return this instead of undefined , we can enable cascades . In a cascade, we can call many methods on the same object in sequence in a single statement.</p>
 
-		<pre>getElement('myBoxDiv') .move(350, 150) .width(100) .height(100) .color('red')...</pre>
+		<pre>getElement('myBoxDiv').move(350, 150).width(100).height(100).color('red')...</pre>
 
 		<h3>Curry</h3>
 
