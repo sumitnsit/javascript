@@ -5,6 +5,13 @@
 		<title>JavaScript</title>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300,600' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="main.css">
+		<link rel="stylesheet" href="lib/codemirror.css">
+    	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="main.js"></script>
+		<script src="lib/codemirror.js"></script>
+		<script src="util/formatting.js"></script>
+		<script src="mode/javascript/javascript.js"></script>
+
 	</head>
 	<body>
 
@@ -198,5 +205,35 @@
 		<h3>Curry</h3>
 
 		<p>Currying allows us to produce a new function by combining a function and an argument.</p>
+		<p>The curry method works by creating a closure that holds that original function and the arguments to curry. It returns a function that, when invoked, returns the result of calling that original function, passing it all of the arguments from the invocation of curry and the current invocation.</p>
+
+		<h3>Memoization</h3>
+		<p>Functions can use objects to remember the results of previous operations, making it possible to avoid unnecessary work. This optimization is called memoization</p>
+
+		<h2>Inheritance</h2>
+
+		<p>JavaScript, being a loosely typed language, never casts. The lineage of an object is irrelevant. What matters about an object is what it can do, not what it is descended from.</p>
+
+		<p>JavaScript is a prototypal language, which means that objects inherit directly from other objects.</p>
+
+		<p>When a function object is created, the Function constructor that produces the function object runs some code like this:</p>
+
+		<pre>this.prototype = {constructor: this};</pre>
+
+		<p>The new function object is given a prototype property whose value is an object containing a constructor property whose value is the new function object.</p>
+
+		<pre>Child.prototype = new Parent();</pre>
+
+		<h3>Object Specifiers</h3>
+
+		<p>It sometimes happens that a constructor is given a very large number of parameters. This can be troublesome because it can be very difficult to remember the order of the arguments. In such cases, it can be much friendlier if we write the constructor to accept a single object specifier instead. That object contains the specification of the object to be constructed.</p>
+
+		<h3>Prototypal</h3>
+
+		<p>A new object can inherit the properties of an old object.</p>
+
+		<p>This is differential inheritance . By customizing a new object, we specify the differences from the object on which it is based.</p>
+
+		<h3>Functional</h3>
 	</body>
 </html>

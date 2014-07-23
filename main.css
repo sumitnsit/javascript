@@ -9,3 +9,12 @@ body{
 	border: 1px solid #EEE;
 	padding: 30px;
 }
+
+.CodeMirror{
+  height: inherit !important;
+  line-height: 1.5em !important;
+}
+
+.CodeMirror pre{
+  background-color: white !important;
+}
