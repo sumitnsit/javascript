@@ -36,6 +36,44 @@ h4{
   font-size: 0.9em;
 }
 
+@media screen 
+    and (max-device-width: 601px)
+    and (orientation : portrait) 
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (device-aspect-ratio: 25/38){
+
+	body{
+		width: 100%;
+		padding: 0px 20px;
+		margin: 0px;
+		box-sizing: border-box;
+	}
+
+	p{
+		font-size: 1.4em;
+	}
+
+}
+
+@media screen
+    and (min-device-width: 602px)
+    and (orientation : landscape) 
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (device-aspect-ratio: 40/23){
+
+	body{
+		width: 100%;
+		padding: 0px 20px;
+		margin: 0px;
+		box-sizing: border-box;
+	}
+
+	p{
+		font-size: 1.4em;
+	}
+
+}
+
 
 @media only screen 
 and (min-device-width : 320px) 

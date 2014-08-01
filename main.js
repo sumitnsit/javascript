@@ -9,6 +9,7 @@ $(document).ready(function(){
     var totalChars = editor.getValue().length;
     editor.autoFormatRange({line:0, ch:0}, {line:totalLines, ch:totalChars});
   });
+
 });
 
 var Parent = function(name){
