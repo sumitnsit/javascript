@@ -13,6 +13,10 @@ body{
 	padding: 30px;
 }
 
+.mywords{
+	color: rgb(0, 53, 189);
+}
+
 .CodeMirror{
   height: inherit !important;
   line-height: 1.5em !important;
