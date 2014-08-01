@@ -4,7 +4,7 @@ $(document).ready(function(){
   $("pre").each(function (){
     preText = $(this).text().trim();
     $(this).text("");
-    var editor = CodeMirror(this, {value: preText, mode: "javascript"});
+    var editor = CodeMirror(this, {value: preText, mode: "javascript", theme: "neo"});
     var totalLines = editor.lineCount();
     var totalChars = editor.getValue().length;
     editor.autoFormatRange({line:0, ch:0}, {line:totalLines, ch:totalChars});

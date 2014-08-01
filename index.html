@@ -6,6 +6,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300,600' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="main.css">
 		<link rel="stylesheet" href="lib/codemirror.css">
+		<link rel="stylesheet" href="lib/neo.css">
     	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script type="text/javascript" src="main.js"></script>
 		<script src="lib/codemirror.js"></script>
@@ -21,9 +22,9 @@
 
 		<p>JSLint, a JavaScript parser that can analyze a JavaScript program and report on the bad parts that it contains. JSLint provides a degree of rigor that is generally lacking in JavaScript development. It can give you confidence that your programs contain only the good parts.</p>
 
-
+		<p>The following code adds a function called 'method' in the Function object. Which can be used to add more functions to the Function object, which will be applicable to all the functions.</p>
 		<pre>Function.prototype.method = function (name, func) { this.prototype[name] = func; return this; };</pre>
-		<div class="lower_caption">Above code adds a 'method' function in Function object, so that you can attach any method to Function object, which will be applicable to all the functions.</div>
+	
 
 		<p>It is recommended that /* */ comments be avoided and // comments be used instead.</p>
 
@@ -87,6 +88,7 @@
 
 		When we make changes to an object, the object's prototype is not touched. The prototype link is used only in retrieval.
 
+		<p>The prototype relationship is a dynamic relationship. If we add a new property to a prototype, that property will immediately be visible in all of the objects that are based on that prototype.</p>
 		<h3>Delegation</h3>
 
 		<p>If we try to retrieve a property value from an object, and if the object lacks the property name, then JavaScript attempts to retrieve the property value from the prototype object. And if that object is lacking the property, then it goes to its prototype, and so on until the process finally bottoms out with Object.prototype . If the desired property exists nowhere in the prototype chain, then the result is the undefined value. This is called delegation</p>
@@ -123,7 +125,7 @@
 
 		<h3>Closure</h3>
 
-		<p>An inner function also enjoys access to the parameters and variables of the functions it is nested within. The function object created by a function literal contains a link to that outer context. This is called closure .</p>
+		<p>Closures are an extension of the concept of scope. With closures, functions have access to variables that were available in the scope where the function was created.</p>
 
 		<p>inner functions get access to the parameters and variables of the functions they are defined within A more interesting case is when the inner function has a longer lifetime than its outer function. Avoid creating functions within a loop. It can be wasteful computationally,and it can cause confusion,</p>
 
@@ -133,34 +135,70 @@
 
 		<p>In addition to the declared parameters, every function receives two additional parameters: this and arguments .</p>
 		
+		<p>The <em>this</em> parameter is very important in object oriented programming, and its value is determined by the invocation pattern .</p>
 		<h4>Method Invocation Pattern</h4>
 
 		<p>When a function is stored as a property of an object, we call it a method . When a method is invoked, this is bound to that object.</p>
 
+		<pre>var myObject = { value: 0,increment: function (inc) { this.value += typeof inc === 'number' ? inc : 1; } };myObject.increment( ); document.writeln(myObject.value); //Output is 1
+		myObject.increment(2); document.writeln(myObject.value); //Output is 3</pre>
 		<h4>Function Invocation Pattern</h4>
 
-		<p>When a function is invoked with this pattern, this is bound to the global object.</p>
+		<p>When a function is not the property of an object, then it is invoked as a function.</p>
+		<p>When a function is invoked with this pattern, this is bound to the global object. Due to this the inner function's <em>this</em> variable points to global object rathan than to its outer function's object. Following is the workaround to solve this issue.</p>
 
-		<p>This was a mistake in the design of the language. Had the language been designed correctly, when the inner function is invoked, this would still be bound to the this variable of the outer function. A consequence of this error is that a method cannot employ an inner function to help it do its work because the inner function does not share the method's access to the object as its this is bound to the wrong value. Fortunately, there is an easy workaround. If the method defines a variable and assigns it the value of this , the inner function will have access to this through that variable. By convention, the name of that variable is that :</p>
+		<pre>var myobj = {
+ name: "Sumit",
+ getName: function(){
+    var that = this; 
+    console.log(this); // prints myobj
 
-		<pre>var that = this; //Workaround</pre>
+    function inner(){
+      console.log(this); // prints global object
+      console.log(that); // prints myobj
+    }
+
+    inner();
+ }
+}</pre>
 
 		<h4>Constructor Invocation Pattern</h4>
 
-		<p>If a function is invoked with the new prefix, then a new object will be created with a hidden link to the value of the function's prototype member, and this will be bound to that new object.</p>
+		<p class="mywords">When a function is invoked using new keyword then it returns an object. The returned object contains properties of function's prototype object, but when you query for hasOwnProperty() then it returns false for those proprty defind in the function's prototype.</p>
 
-		<p>Functions that are intended to be used with the new prefix are called constructors .</p>
+		<p>Functions that are intended to be used with the new prefix are called constructors . By convention, they are kept in variables with a capitalized name.</p>
 
+		<pre>var Func = function(){}
+Func.prototype // is an empty object, prints Object {}
+var obj = new Func();
+obj.prototype // Func.prototype is not linked to obj.prototype, prints undefined
+obj // prints Func {}
+Func.prototype.name = "Sumit";
+obj // now prints func {name: "Sumit"}
+obj.name // prints "Sumit"
+obj.hasOwnProperty(name) // retuns false</pre>
 		<h4>Apply Invocation Pattern</h4>
 
 		<p>The apply method lets us construct an array of arguments to use to invoke a function. It also lets us choose the value of this . The apply method takes two parameters. The first is the value that should be bound to this . The second is an array of parameters.</p>
 
-		<pre>var array = [3, 4]; var sum = add.apply(null, array); </pre>
+		<p class="mywords">Suppose you already have a function defined in an object which uses object's property (using this) and input params to calculate something. Now, you want to reuse that method but you don't want to use that object's property but your object's property and also want to use your own input parameters. </p>
 
-		<pre>var statusObject = { status: 'A-OK' };</pre>
+		<p class="mywords">Call apply function on that method by passing your own object which will be used as <em>this</em> and pass an array of arguments if required.</p>
 
-		<pre>var status = Quo.prototype.get_status.apply(statusObject);</pre>
+		<pre>  var obj = {
+    val: 5,
+    add: function(input){
+      return this.val + input;
+    }
+  }
+  
+  console.log(obj.add(10)); // prints 15
 
+  var anotherObject = {
+    val: 10 
+  }
+  
+  console.log(obj.add.apply(anotherObject, [20])); // prints 30</pre>
 		<h3>Argument</h3>
 
 		<p>A bonus parameter that is available to functions when they are invoked is the arguments array.</p>
@@ -179,6 +217,7 @@
 
 		<h3>Augmenting Types</h3>
 
+		<p class="mywords">Augmenting means adding some usefull functions at top level e.g. adding getIntonly to Number or adding trim to String</p>
 		<p>JavaScript allows the basic types of the language to be augmented. In JavaScript you can add methods to any object. Adding a method to Object.prototype makes that method available to all objects.</p>
 
 		<pre>Function.prototype.method = function (name, func) { this.prototype[name] = func; return this; };</pre>
@@ -193,8 +232,32 @@
 
 		<p>Unfortunately, JavaScript does not have block scope even though its block syntax suggests that it does. For example a variable declared inside 'if' control is accessible after the 'if' block.</p>
 
+		<pre> var num = 5;
+  
+  if(num === 5){
+    var val = 10;
+  }
+  
+  console.log(val); // prints 10 :(</pre>
+
+  <p>In many modern languages, it is recommended that variables be declared as late as possible, at the first point of use. That turns out to be bad advice for JavaScript because it lacks block scope. So instead, it is best to declare all of the variables used in a function at the top of the function body.</p>
+
 		<h3>Module</h3>
 		<p>We can use functions and closure to make modules. A module is a function or object that presents an interface but that hides its state and implementation. By using functions to produce modules, we can almost completely eliminate our use of global variables, thereby mitigating one of JavaScript's worst features.</p>
+
+		<p>Use of the module pattern can eliminate the use of global variables. It promotes information hiding and other good design practices. It is very effective in encapsulating applications and other singletons.</p>
+
+		<pre>  var Employee = (function(){
+   	 var salary = 2000;
+    
+    return {
+      getSalary: function(){
+          return salary;
+      }
+   	}
+  }());
+  
+  console.log(Employee.getSalary()); // prints 2000</pre>
 
 		<h3>Cascade</h3>
 
@@ -206,6 +269,30 @@
 
 		<p>Currying allows us to produce a new function by combining a function and an argument.</p>
 		<p>The curry method works by creating a closure that holds that original function and the arguments to curry. It returns a function that, when invoked, returns the result of calling that original function, passing it all of the arguments from the invocation of curry and the current invocation.</p>
+
+		<pre>Function.method('curry', function() {
+  var slice = Array.prototype.slice;
+  var args = slice.apply(arguments);
+  var that = this;
+  
+  return function(){
+    return that.apply(null, args.concat(slice.apply(arguments)));
+  };
+});</pre>
+
+<p>Simple example</p>
+
+<pre>  function add(num){
+    return num + 2;
+  }  
+  console.log(add(8)); // prints 10
+  
+  function add2(num){
+    num = num + 10;
+    return add.apply(null, [num]);
+  }
+  
+  console.log(add2(20)); // prints 32</pre>
 
 		<h3>Memoization</h3>
 		<p>Functions can use objects to remember the results of previous operations, making it possible to avoid unnecessary work. This optimization is called memoization</p>
