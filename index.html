@@ -3,6 +3,7 @@
 <html>
 	<head>
 		<title>JavaScript</title>
+		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300,600' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="main.css">
 		<link rel="stylesheet" href="lib/codemirror.css">
@@ -299,28 +300,47 @@ obj.hasOwnProperty(name) // retuns false</pre>
 
 		<h2>Inheritance</h2>
 
+		<p class="mywords">In simple words, an object inherits from that class which is pointed by <em>prototype</em></p>
+		<pre>  var Parent = function(){
+    this.method1 = function(){
+     console.log("Parent"); 
+    }
+  }
+  
+  var Child = function(){
+    this.method2 = function(){
+      console.log("Child");
+    }
+  }
+  
+  Child.prototype = new Parent();
+  
+  var c = new Child();
+  
+  c.method1();   // prints Parent
+  c.method1();   // prints Child  
+  
+  console.log(c instanceof Parent);  // prints true
+  console.log(c instanceof Child);  // prints true</pre>
+
+ <p class="mywords">The following code defines/creates a function object. This object has a prototype property which further has a hidden property called <em>constructor</em>. This constructor property points to the function itself which defines the object (in this case function(){this.name="Chanky"}).</p>
+
+ <pre>  var Child = function(){
+    this.name = "Chanky";
+  }
+    console.log(Child.prototype); // prints an empty object as Object{}, although it has a constructor property
+    console.log(Child.prototype.constructor); // prints the function i.e. function(){this.name="Chanky"}
+</pre>
+
+		<p>Every function gets a prototype object because the language does not provide a way of determining which functions are intended to be used as constructors. The constructor property is not useful. It is the prototype object that is important.</p>
+
 		<p>JavaScript, being a loosely typed language, never casts. The lineage of an object is irrelevant. What matters about an object is what it can do, not what it is descended from.</p>
 
 		<p>JavaScript is a prototypal language, which means that objects inherit directly from other objects.</p>
 
-		<p>When a function object is created, the Function constructor that produces the function object runs some code like this:</p>
-
-		<pre>this.prototype = {constructor: this};</pre>
-
-		<p>The new function object is given a prototype property whose value is an object containing a constructor property whose value is the new function object.</p>
-
-		<pre>Child.prototype = new Parent();</pre>
-
+<pre>Function.method('inherits', function (Parent) { this.prototype = new Parent( ); return this; });</pre>
 		<h3>Object Specifiers</h3>
 
 		<p>It sometimes happens that a constructor is given a very large number of parameters. This can be troublesome because it can be very difficult to remember the order of the arguments. In such cases, it can be much friendlier if we write the constructor to accept a single object specifier instead. That object contains the specification of the object to be constructed.</p>
-
-		<h3>Prototypal</h3>
-
-		<p>A new object can inherit the properties of an old object.</p>
-
-		<p>This is differential inheritance . By customizing a new object, we specify the differences from the object on which it is based.</p>
-
-		<h3>Functional</h3>
 	</body>
 </html>

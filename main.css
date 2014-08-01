@@ -1,6 +1,9 @@
 html{
 	background-color: #FAFAFA;
 }
+
+
+
 body{
 	font-family: 'Open Sans', sans-serif;
 	width: 80%;
@@ -27,4 +30,13 @@ color: #00A001;
 h4{
   color: #0088CC;
   font-size: 0.9em;
+}
+
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) {
+	body{
+		width: 100%;
+	}
 }
