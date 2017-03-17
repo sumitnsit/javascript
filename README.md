@@ -471,18 +471,34 @@ Use `document.forms[0].submit();`
 #### What is a promise?
 The Promise object is used for deferred and asynchronous computations. A Promise is in one of the three states:
 
-**pending:** initial state, not fulfilled or rejected.
-**fulfilled:** successful operation
-**rejected:** failed operation.
-
-Another term describing the state is settled: the Promise is either fulfilled or rejected, but not pending.
+- **fulfilled** - The action relating to the promise succeeded
+- **rejected** - The action relating to the promise failed
+- **pending** - Hasn't fulfilled or rejected yet
+- **settled** - Has fulfilled or rejected
 
 ```javascript
-new Promise(executor);
-new Promise(function(resolve, reject) { ... });
-```
+var promise = new Promise(function(resolve, reject) {
+  // do a thing, possibly async, then…
 
-**executor:** Function object with two arguments `resolve` and `reject`. The first argument fulfills the promise, the second argument rejects it. We can call these functions, once our operation is completed.
+  if (/* everything turned out fine */) {
+    resolve("Stuff worked!");
+  }
+  else {
+    reject(Error("It broke"));
+  }
+});
+```
+then return the **promise** object from a function
+
+Here's how you use that promise:
+
+```javascript
+promise.then(function(result) {
+  console.log(result); // "Stuff worked!"
+}, function(err) {
+  console.log(err); // Error: "It broke"
+});
+```
 
 #### WebSockets
 It helps to enable `socket` connections between a web browser and a server which basically means that there is a persistent connection between the client and the server and both parties can send data to the other at any time.
